@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  personalInfo   PersonalInfo?
+  accountDetails AccountDetails?
+  preferences    Preferences?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model PersonalInfo {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  user          Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String @unique @db.ObjectId
+  firstName     String
+  lastName      String
+  email         String
+  country       String
+  streetAddress String
+  city          String
+  region        String
+  postalCode    String
+}
+
+model AccountDetails {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  user             Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String   @unique @db.ObjectId
+  username         String
+  password         String
+  email            String   @unique
+  dateOfBirth      String
+  phoneNumber      String
+  securityQuestion String
+  securityAnswer   String
+}
+
+model Preferences {
+  id                  String  @id @default(auto()) @map("_id") @db.ObjectId
+  user                Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String  @unique @db.ObjectId
+  theme               String
+  language            String
+  timezone            String
+  currency            String
+  bio                 String
+  emailNotifications  Boolean
+  smsNotifications    Boolean
+  pushNotifications   Boolean
+  newsletterFrequency String
+}
