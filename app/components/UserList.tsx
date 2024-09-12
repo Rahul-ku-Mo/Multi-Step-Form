@@ -5,6 +5,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 
 import { useFetchUsers } from "@/hooks/useFormDetail";
+import queryClient from "@/libs/queryClient";
 
 interface User {
   id: string;
@@ -24,7 +25,7 @@ export function UserList() {
       body: JSON.stringify({ id }),
     });
 
-    router.refresh();
+    queryClient.invalidateQueries({ queryKey: ["users"] });
   };
 
   if (!users) return null;
