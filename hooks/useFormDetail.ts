@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useFormContext } from "@/context/FormContext";
@@ -31,7 +32,7 @@ export const useCreateUser = () => {
   const { updateUserId } = useFormContext();
 
   return useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data : any) => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/users`,
         {
@@ -55,7 +56,7 @@ export const useCreateUser = () => {
 
 export const useCreatePersonalInfo = () =>
   useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data : any) => {
       const userId = getUserIdFromLocalStorage();
       if (!userId) {
         throw new Error("User ID not found in localStorage");
@@ -88,7 +89,7 @@ export const useCreatePersonalInfo = () =>
 
 export const useCreateAccountDetails = () =>
   useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data : any) => {
       const userId = getUserIdFromLocalStorage();
       if (!userId) {
         throw new Error("User ID not found in localStorage");
@@ -121,7 +122,7 @@ export const useCreateAccountDetails = () =>
 
 export const useCreatePreferences = () =>
   useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data : any) => {
       const userId = getUserIdFromLocalStorage();
       if (!userId) {
         throw new Error("User ID not found in localStorage");

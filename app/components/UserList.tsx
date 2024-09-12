@@ -5,6 +5,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 
 import { useFetchUsers } from "@/hooks/useFormDetail";
+
 interface User {
   id: string;
   name: string;
@@ -15,7 +16,7 @@ export function UserList() {
 
   const router = useRouter();
 
-  const { data: users, isLoading, error } = useFetchUsers();
+  const { data: users } = useFetchUsers();
 
   const onDeleteUser = async (id: string) => {
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
@@ -36,7 +37,7 @@ export function UserList() {
         </h2>
       )}
       <ul className="space-y-4 mt-2">
-        {users?.map((user) => (
+        {users?.map((user: User) => (
           <li
             key={user.id}
             className="bg-white rounded-lg cursor-pointer max-w-md shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"

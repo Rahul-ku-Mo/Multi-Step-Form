@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useFormContext } from "react-hook-form";
 import { steps } from "@/constant";
@@ -28,13 +28,9 @@ export default function NavigationButtons({
     formState: { isValid, isDirty },
     trigger,
     getValues,
-    watch,
   } = useFormContext();
 
-  const [_, setCompletedSteps] = useState<string[]>([]);
-
-  // Watch all form fields
-  const formValues = watch();
+  const [, setCompletedSteps] = useState<string[]>([]);
 
   // Use isDirty from react-hook-form to check for changes
   const hasChanges = isDirty;
@@ -47,13 +43,13 @@ export default function NavigationButtons({
 
       switch (currentStepName) {
         case "personalInfo":
-          await createPersonalInfo.mutateAsync(currentValues);
+          createPersonalInfo.mutate(currentValues);
           break;
         case "accountDetails":
-          await createAccountDetails.mutateAsync(currentValues);
+          createAccountDetails.mutate(currentValues);
           break;
         case "preferences":
-          await createPreferences.mutateAsync(currentValues);
+          createPreferences.mutate(currentValues);
           break;
         default:
           return;

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateUser } from "@/hooks/useFormDetail";
 import { useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export function CreateUserModal() {
   const [isOpen, setIsOpen] = useState(false);
